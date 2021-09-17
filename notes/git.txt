@@ -1,0 +1,1043 @@
+    1  history
+    2  reload
+    3  history
+    4  # Git tutorial
+    5  cd zgit
+    6  git init
+    7  tree -a
+    8  less HEAD
+    9  less .git/HEAD
+   10  cd .git/refs/heads
+   11  ls
+   12  cd ~/zgit
+   13  ls
+   14  ls -la
+   15  # head is a pointer to the current branch you are working on
+   16  # objects are all the objects in your repository
+   17  # refs/heads - available heads. ref/tags release versions
+   18  echo "Hello World" > hello
+   19  ls
+   20  echo "Silly Example" > example
+   21  ls
+   22  # We have now created two files
+   23  # to check the files in there are 2 steps
+   24  # 1 fill in the index file (aka cache)
+   25  # commit that index file to an object
+   26  # so git keeps files in an index
+   27  git update-index --add hello example
+   28  # git will take multiple file arguments
+   29  tree -a
+   30  # we can now see two files
+   31  ls .git/objects/??/*
+   32  ls .git/objects/??/* > tmp.tmp
+   33  vim tmp.tmp
+   34  chmod 755 tmp.tmp
+   35  .\tmp.tmp
+   36  ./tmp.tmp
+   37  vim tmp.tmp
+   38  ./tmp.tmp
+   39  # objects are imutable.  Once in they are set in stone
+   40  # you can shorten the hex to 6 or 8 significant digits
+   41  clear
+   42  tree -a
+   43  less .git/index
+   44  # we have let git know we are interested in the files.
+   45  # we have not loaded them into three yet
+   46  echo >> "It's a new day for git" >>hello
+   47  git diff-files
+   48  # not human readable but ...
+   49  git diff-files -p
+   50  echo"It's a new day for git" >>hello
+   51  echo "It's a new day for git" >>hello
+   52  ls
+   53  git diff-files -p
+   54  # git diff-files shows us the difference between what is in the working files and what is in the index
+   55  git diff
+   56  # ^ is a short version of git diff-files -p output to less
+   57  git status
+   58  ls
+   59  rm It\'s\ a\ new\ day\ for\ git
+   60  ls
+   61  git status
+   62  # we now need to create a tree object and commit the tree
+   63  tree -a
+   64  git write-tree
+   65  tree -a
+   66  git -cat-file -p f42e7d
+   67  git cat-file -p f42e7d
+   68  # so this tree tells us about the two files we have added but not commited
+   69  # we now commit the tree
+   70  tree=$(git write-tree)
+   71  echo $tree
+   72  commit=$(echo 'initial commit' | git commit-tree $tree)
+   73  git update-ref HEAD $commit
+   74  tree -a
+   75  # refs/heads/master now exists
+   76  # the commit object was added
+   77  # it is important to note all commits after the first will have a parent
+   78  # the above is an in depth look.  the wrapper function is git commit
+   79  git diff-files -p
+   80  git diff-index
+   81  git diff-index -p
+   82  git diff-index -p HEAD
+   83  git diff HEAD
+   84  # git diff-index compares a tree against a working tree.
+   85  # --cached flag says compare against the cached contents
+   86  git diff-index --cached -p HEAD
+   87  # nothing as we just wrote theindex
+   88  # if a file is not listed in the index git does not care about it's existance
+   89  # working tree contents
+   90  # index file
+   91  # commited tree
+   92  # WT - the files in the working tree
+   93  # index file - list of files git is managing
+   94  # commited tree - object in objects, ? pathed by head?
+   95  git status
+   96  # i see hello has been modified
+   97  git diff
+   98  git update-index hello
+   99  tree -a
+  100  ls -la .git/objects/??/*
+  101  ls -a .git/objects/??/* > tmp.tmp
+  102  vim tmp.tmp
+  103  ./tmp.tmp
+  104  git diff-files -p
+  105  git diff-index -p
+  106  git diff-index
+  107  git diff-index -p HEAD
+  108  git commit
+  109  git commit "first auto commit"
+  110  git status
+  111  whereis git commit
+  112  # we have a new diff command
+  113  git diff-tree
+  114  git diff-tree -p HEAD
+  115  git diff-tree -pretty HEAD
+  116  git diff-tree --pretty HEAD
+  117  git status
+  118  git commit
+  119  git status
+  120  git diff-tree --pretty HEAD
+  121  git diff-tree --p HEAD
+  122  git diff-tree -p HEAD
+  123  git rev-list
+  124  git rev-list --all
+  125  git log -p
+  126  git rev-list | git diff-tree --stdin
+  127  git rev-list --all | git diff-tree --stdin
+  128  git rev-list --all | git diff-tree -p --stdin
+  129  clear
+  130  git log -p
+  131  git log
+  132  git log -p
+  133  # tags
+  134  # 2 types
+  135  # the first is a branch
+  136  git tag my-first-tag
+  137  # writes current HEAD into tag
+  138  # so i can go back there?
+  139  clear
+  140  cd .git
+  141  ls
+  142  cd refs
+  143  ls
+  144  cd tags
+  145  less my-first-tag
+  146  # so it actually contains an object referance id
+  147  git cat-file -p 0f9e80322bdbd9b8f69600e3ea64b05268dbc649
+  148  # so this is the comment file of our last commit.
+  149  cd ~/zgit
+  150  git add tmp.tmp
+  151  git commit
+  152  git diff my-first-tag
+  153  # for major release we do signed tags
+  154  git tag -s add_tmp
+  155  tree -a
+  156  git commit
+  157  git tag -s add_tmp HEAD
+  158  clear
+  159  tree -a
+  160  # where can i see these signed tags?
+  161  git log
+  162  git tag papa
+  163  git log
+  164  git tag -s papas
+  165  git tag -s papas "hello"
+  166  clear
+  167  # if you copy your repository your pathes will have changed
+  168  git update-index --refresh
+  169  # to force a total index rebuild
+  170  git status
+  171  git read-tree --reset HEAD
+  172  git update-index --refresh
+  173  # short version
+  174  git reset
+  175  cd ..
+  176  mkdir zgitii
+  177  cd zgitii
+  178  rsync -rL rsync://rsync.kernel.org/pub/scm/git/git.git/ .git
+  179  ls -a
+  180  rsync -rL rsync://rsync.kernel.org/pub/scm/git/git.git/ .git
+  181  git clone https://github.com/git/git.git
+  182  ls
+  183  tree
+  184  clear
+  185  cd git
+  186  ls
+  187  cd .git
+  188  ls
+  189  tree
+  190  cd ..
+  191  git read-tree HEAD
+  192  cd .git
+  193  ls
+  194  tree
+  195  git checkout-index -u -a
+  196  cd ..
+  197  git checkout-index -u -a
+  198  git checkout
+  199  git status
+  200  ls
+  201  vim zlib.c
+  202  git status
+  203  git add zlib.c
+  204  git commit
+  205  git status
+  206  log
+  207  log -p
+  208  clear
+  209  git log
+  210  cd ..
+  211  ls
+  212  cd jwhiteis
+  213  cd zgit
+  214  git switch -c mybranch
+  215  cat .git/HEAD
+  216  git branch
+  217  # to create a branch without switching to it
+  218  git branch newbranch
+  219  git branch
+  220  git switch mybranch
+  221  echo "Work, work, work" >>hello
+  222  git commit -m "some work" -i hello
+  223  git switch master
+  224  echo "Play Play Play" >>hello
+  225  echo "lots of fun" >>example
+  226  git commit -m "some fun." -i hello example
+  227  gitk --all
+  228  apt-get install gitk
+  229  apt install gitk
+  230  git status
+  231  git merge -m "merge work in mybranch" mybranch
+  232  vim hello
+  233  clear
+  234  git merge -m "merge work in mybranch" mybranch
+  235  git commit -i hello
+  236  ls
+  237  git status
+  238  git branch
+  239  ls
+  240  git show-branch --topo-order --more=1 master mybranch
+  241  git switch mybranch
+  242  git merge -m "merge upstream changes" master
+  243  # so there were no changes other than to change the head location of the branch
+  244  git switch master
+  245  echo "fooey" >> hello
+  246  git status
+  247  git commit -a "Adding"
+  248  git add hello
+  249  git commit
+  250  ls
+  251  clear
+  252  git status
+  253  git switch mybranch 
+  254  git status
+  255  cat hello
+  256  git switch master
+  257  cat hello
+  258  # so git switches the files in the working tree
+  259  # depending on branch
+  260  ls -l
+  261  git swtich mybranch
+  262  git switch mybranch 
+  263  ls -l
+  264  # so it swaps the files
+  265  clear
+  266  git merge "changes" master
+  267  git merge -m "changes" master
+  268  cat hello
+  269  clear
+  270  cd ..
+  271  ls
+  272  rm -r zgitii
+  273  rm -r zgitii -y
+  274  rm -r zgitii --y
+  275  ls
+  276  cp -a zgit zgit2
+  277  cd zgit2
+  278  git refresh
+  279  git rebuild
+  280  ls
+  281  git reset
+  282  git status
+  283  git switch master
+  284  ls
+  285  echo "Bobby" >> hello
+  286  git add hello
+  287  git commit "bobby"
+  288  git commit
+  289  clear
+  290  cd ..
+  291  ls
+  292  cd zgit
+  293  git pull ~/zit2
+  294  git pull ~/zgit2
+  295  cat hello
+  296  git switch master
+  297  cat hello
+  298  git switch mybranch
+  299  merge -m "bobby" master
+  300  git merge -m "bobby" master
+  301  cat hello
+  302  git switch master
+  303  merge -m "bobby" mybranch
+  304  git merge -m "bobby" mybranch
+  305  cat hello
+  306  clear
+  307  gcloud compute ssh --zone us-central1-a admin_jason@jason-dev
+  308  exit
+  309  history | tail
+  310  history | tail -n 20
+  311  # you can pull points in time
+  312  history | grep pull
+  313  # git pull ~/zgit2 tag
+  314  # git pull ~/zgit2 tag tagname
+  315  # does this pulll to a branch?
+  316  # skipping a section at the authors recomendatin
+  317  # publishing your work
+  318  # typically a public repository is created and people push (publish) and pull from it
+  319  # these repositories could futhur be mirrored
+  320  # to get a public repository git-recieve-pack
+  321  cd ..
+  322  ls
+  323  # git-receive-pack get the repository
+  324  # git-push uses two commands
+  325  # git send-pack && git-receive-pack
+  326  # git recieve pack runs on the remote machine
+  327  # private repositories are in a hidden file
+  328  # public repositories are in a projectname.git repository
+  329  # we will create one now...
+  330  mkdir zgPublic.git
+  331  ls -a zgPublic.git
+  332  GIT_DIR=zgPublic.git git init
+  333  ls -a zgPublic.git
+  334  whereis git-receive-pack
+  335  # confirm existence of program
+  336  clear
+  337  # there is some config that can be done here tos setup publishing via http
+  338  # mv my-git.git/hooks/post-update.sample my-git.git/hooks/post-update
+  339  # now we populate the public repository
+  340  cd zgit
+  341  git push ~/zgPublic.git master
+  342  cd ..
+  343  ls
+  344  cd zgPublic.git
+  345  tree -a
+  346  # so the new repository has recieved each individual file.
+  347  cd ..
+  348  clear
+  349  # how can we make this easier to transfer? Pack it!
+  350  # note the two files created .pack and .info are functionally a set.
+  351  # thats .pack .idx
+  352  cd zgit
+  353  git repack
+  354  tree -a
+  355  # now we have the pack and the files
+  356  # to clean up
+  357  git prune-packed
+  358  tree -a
+  359  # and we have a much cleaner file tree
+  360  # best practice?  Pack on major release
+  361  git count-objects
+  362  git cat-file -p ce1187
+  363  git cat-file -p cdce1187
+  364  git status
+  365  git status -a
+  366  git status -b
+  367  git status -b mybranch
+  368  man gitcore-tutorial
+  369  history | tail -n 20
+  370  tree -a
+  371  fit prune-packed
+  372  git prune-packed
+  373  tree -a
+  374  git prune-packed
+  375  git repack
+  376  # git is completely non-hierarchicl
+  377  # you can create a workflow the team will adhere to but git does not enforce one
+  378  ls
+  379  git branch
+  380  git branch --help
+  381  git branch --list
+  382  git branch commit-fix
+  383  git branch diff-fix
+  384  git show-branch
+  385  git status
+  386  git commit
+  387  git swith commit-fix
+  388  git switch commit-fix
+  389  git status
+  390  echo "Who done it? Commit Fix >> hello\n"
+  391  echo "Who done it? Commit Fix" >> hello
+  392  ls
+  393  git switch diff-fix 
+  394  echo "Who done it? Diff Fix" >> hello
+  395  git status
+  396  git add hello
+  397  git switch commit-fix 
+  398  git add hello
+  399  git reset --hard master~2
+  400  git show-branch
+  401  git commit
+  402  git switch diff-fix 
+  403  git commit
+  404  less hello
+  405  git log -p
+  406  less hello
+  407  git branch --list
+  408  git switch master
+  409  git switch commit-fix 
+  410  echo "commit-fix" >> hello
+  411  less hello
+  412  git switch diff-fix 
+  413  git add hello
+  414  git switch diff-fix 
+  415  git commit
+  416  git switch diff-fix 
+  417  less hello
+  418  echo "diff-fix" >> hello
+  419  git add diff-fix
+  420  git add hello
+  421  git commit
+  422  less hello
+  423  git switch commit-fix 
+  424  less hello
+  425  git switch master
+  426  less hello
+  427  git diff
+  428  git diff hello
+  429  git diff --help
+  430  git diff commit-fix diff-fix 
+  431  git diff diff-fix commit-fix 
+  432  git show-branch
+  433  git merge -m "bring in my branch" mybranch
+  434  git merge -m "bring in diff fix" diff-fix
+  435  git merge -m "bring in commit fix" commit-fix 
+  436  vim hello
+  437  git add hello
+  438  git commit
+  439  git merge -m "bring in commit fix" commit-fix 
+  440  git show-branch
+  441  clear
+  442  # that ends the first pass through the tutorial
+  443  # watch show branch more on the second pass
+  444  # go greet the sun!
+  445  vim
+  446  brew
+  447  brew update
+  448  brew outdated
+  449  brew upgrade
+  450  brew outdated
+  451  vim
+  452  brew vim
+  453  brew
+  454  brew info vim
+  455  man gittutorial
+  456  ls
+  457  ls z*
+  458  echo z*
+  459  echo rm -r z*
+  460  rm -r z*
+  461  rm -r z* --y
+  462  sudo rm -r z* --y
+  463  ls
+  464  clear
+  465  git status
+  466  # so does git look down the tree?
+  467  cd Projects
+  468  cd Hypnosis
+  469  ls
+  470  ls -a
+  471  cd Hypnosis
+  472  ls
+  473  ls -a
+  474  git status
+  475  cd ~
+  476  ls
+  477  ls -a
+  478  cd .git
+  479  ls
+  480  git list
+  481  git --help
+  482  git log
+  483  git status
+  484  cd ..
+  485  git status
+  486  git help
+  487  ls
+  488  mkdir zgit
+  489  cd zgit
+  490  # second pass thru git
+  491  # git has two word commands git log
+  492  # these can be referenced by man git-log
+  493  # or git help log
+  494  # so there is that
+  495  man git
+  496  man gitcore-tutorial
+  497  man gittutorial
+  498  # so i am going to do the git tutorial then circle back to the gitcore tutorial
+  499  ls
+  500  git init
+  501  git config --global init.defaultBranch master
+  502  git init
+  503  # tell git to add all
+  504  tree -a
+  505  git add .
+  506  tree -a
+  507  # no observable changes to the file tree...
+  508  # changes have been staged to index
+  509  git status
+  510  git commit
+  511  git add
+  512  git add .
+  513  git commit
+  514  for i in {10..20}_file.txt do; echo $i > $i ; done 
+  515  for i in {10..20}_file.txt do; echo $i > $i done 
+  516  ls
+  517  cat 11_file.txt
+  518  git add .
+  519  git status
+  520  echo rm -r *
+  521  rm -r *
+  522  ls
+  523  ls -a
+  524  for i in {10..20}_file.txt; do echo "This is the $i file" > $i; done 
+  525  ls
+  526  git add .
+  527  git status
+  528  cat 20*
+  529  git commit
+  530  tree -a
+  531  git log
+  532  # So we can look up the id of the commit
+  533  # a8c31fab0
+  534  git cat-file -p a8c31fab0
+  535  # from here we can see the tree
+  536  git cat-file -p cba06f8ae
+  537  # this lists all the blobs that we have made
+  538  cat 1*
+  539  for i in 1* ; do echo $i ; done
+  540  for i in *.txt ; do echo $i ; done
+  541  for i in *.txt ; do echo $i ; done > summary.txt
+  542  git add .
+  543  git status
+  544  # so git knows what i have already added and allows me to add more
+  545  git commit "Added Summary"
+  546  git commit -c "Added Summary"
+  547  git help commit
+  548  git commit -m "Added Summary"
+  549  clear
+  550  git log -p
+  551  git diff -cached
+  552  git diff --cached
+  553  cat 10_file.txt
+  554  cat >> 10_file.txt
+  555  git add .
+  556  git status
+  557  git diff --cached
+  558  cat >> 11_file.txt
+  559  git add 11_file.txt
+  560  git diff --cached
+  561  git tree -a
+  562  tree -a
+  563  # files are stacked in the index to be applied....
+  564  # 43 directories, 65 files
+  565  git commit -m "adding two changes"
+  566  # 2 files changed, 5 insertions(+)
+  567  # so that tells me something
+  568  tree -a
+  569  # 45 directories, 67 files
+  570  history | tail -n 20
+  571  # so the hash on the files created two new directories
+  572  # I'm surprised this didn't create more files, it said 5 insertions butaccording to tree there were only 2 new files created...
+  573  git log
+  574  for i in read; do echo $i; done <<< summary.txt 
+  575  for i in $(read); do echo $i; done <<< summary.txt 
+  576  man read 
+  577  info read
+  578  read --help
+  579  read -help
+  580  read
+  581  echo $REPLY
+  582  while read i do; echo $REPLY ; done <summary.txt
+  583  while read i do; echo $REPLY done <summary.txt
+  584  while read i do; echo "$i" done <summary.txt
+  585  while $(read) i do; echo "$i" done <summary.txt
+  586  while $(read) i; do echo "$i" done <summary.txt
+  587  while read i; do echo "$i" done <summary.txt
+  588  ls
+  589  while read i; do echo "$i"; done <summary.txt
+  590  while read i; do echo "$i $REPLY"; done <summary.txt
+  591  while read i; do echo "$i"; done <summary.txt
+  592  while read i; do cat "$i"; done <summary.txt
+  593  while read i; do echo "\n"; cat "$i"; done <summary.txt
+  594  while read i; do echo "\n"; echo "$i\n"; cat "$i"; done <summary.txt
+  595  while read i; do echo "\n"; echo "Contents of $i"; cat "$i"; done <summary.txt
+  596  while read i; do echo "\n"; echo "Contents of $i"; cat "$i"; done <summary.txt | less
+  597  echo 'while read i; do echo "\n"; echo "Contents of $i"; cat "$i"; done <summary.txt' > listsummary.sh
+  598  less listsummary.sh
+  599  vim listsummary.sh
+  600  chmod 755 listsummary.sh
+  601  ./listsummary.sh
+  602  ./listsummary.sh | less
+  603  # nice side digresion.
+  604  # lets get back to git
+  605  git add .
+  606  git status
+  607  git commit -m "Add summary content lister"
+  608  clear
+  609  # if the files are already managed by git you can add and commit changes in one step.
+  610  echo 'for i in *.txt ; do echo $i ; done > summary.txt' > rebuildSummary.sh
+  611  vim rebuildSummary.sh
+  612  chmod 755 rebuildSummary.sh
+  613  ./rebuildSummary.sh
+  614  less summary.txt
+  615  stats summary.txt
+  616  stat summary.txt
+  617  stat -p summary.txt
+  618  man stat
+  619  stat -F summary.txt
+  620  git status
+  621  cat >> 15_file.txt
+  622  git status
+  623  git commit -a -m "doing commit without add"
+  624  git status
+  625  # my cat changes are in but my status changes are out!
+  626  git add .
+  627  git status
+  628  git commit -m "added my rebuild summary.sh"
+  629  git log
+  630  # git add snapshots files contents and holds those changes in the index
+  631  git log -p
+  632  git log --stat --summary
+  633  # in git speak, an insertion is a line
+  634  # 
+  635  # Branching
+  636  #
+  637  history | tail -n20
+  638  git branch
+  639  # one branch, master
+  640  git branch exp # add an experimental branch
+  641  git branch
+  642  git switch exp 
+  643  cat >> 20_file.txt
+  644  status
+  645  git status
+  646  git commit -a -m "Changed file 20 \n \n Made the change\n"
+  647  git log
+  648  git switch master
+  649  cat >> 20_file.txt
+  650  git commit -a -m ""
+  651  git commit -a -m "Change the file on master branc"
+  652  git log
+  653  git switch exp
+  654  git log
+  655  git switch master 
+  656  git log
+  657  # so they share the same log till the split
+  658  # the two logs do not appear side by side.
+  659  # does the index hold this or ???
+  660  tree -a
+  661  # the .git/refs/heads has 2 files, one per branch
+  662  # what are the best practices here?
+  663  #
+  664  # to merge the changes between the branches
+  665  # from the master branch
+  666  git merge exp
+  667  # Auto-merging 20_file.txt\n# CONFLICT (content): Merge conflict in 20_file.txt\n# Automatic merge failed; fix conflicts and then commit the result.
+  668  # 
+  669  # vim to the rescue!
+  670  # edit the file which has been marked up with merge confilts
+  671  vim 20_file.txt
+  672  git commit -a
+  673  git log
+  674  git switch exp
+  675  git log
+  676  # so the last thing recognized on the exp branch is the last mod to 20_
+  677  cat 20_file.txt
+  678  # we see it is still in that state
+  679  git switch master 
+  680  cat 20_file.txt
+  681  git switch exp 
+  682  # as an aside how did git do that integration with the command line?
+  683  #
+  684  # so now if i want to bring exp up to date...
+  685  git merge master
+  686  cat 20_file.txt
+  687  git log
+  688  gitk
+  689  brew -help
+  690  brew help
+  691  brew install gitk
+  692  brew update
+  693  brew install git
+  694  brew install git-gui
+  695  gitk
+  696  # wow!  That was worth the install
+  697  # if i want i can delete the experimental branch
+  698  git branch -d exp
+  699  # fails - because I'm in it?
+  700  git switch master 
+  701  git branch -d exp
+  702  # and now it works
+  703  tree -a
+  704  the branch has been removed from heads
+  705  gitk
+  706  # the branch is no longer available by name, it's changes are merged with master
+  707  cd ..
+  708  git clone ~/zgit zgitme
+  709  cd zgit
+  710  ls
+  711  cd ..
+  712  cd zgitme
+  713  ls
+  714  git log
+  715  # (HEAD -> master, origin/master, origin/HEAD)
+  716  # it looks back to origin.
+  717  gitk
+  718  history | grep -a ^for
+  719  history | grep -i ^for
+  720  history | grep -i "^for"
+  721  history | grep -i [^for*]
+  722  history | grep -i for
+  723  # lets make some more files
+  724  for i in {21..30}_file.txt; do echo "This is the $i file" > $i; done 
+  725  ls
+  726  git status
+  727  git add .
+  728  git status
+  729  git commit
+  730  ls zgit zgitme
+  731  ls ~/zgit ~/zgitme
+  732  cd ..
+  733  cd zgit
+  734  git pull ~/zgitme
+  735  git log
+  736  cd ..
+  737  cd zgitme
+  738  git log
+  739  # ? the "working tree" are the files in the file system
+  740  cat >> 25_file.txt
+  741  git commit -a
+  742  cd ..
+  743  cd zgit
+  744  git fetch ~/zgitme master
+  745  git  log -p HEAD..FETCH_HEAD
+  746  git log
+  747  gitk HEAD..FETCH_HEAD
+  748  # a very clean look in between
+  749  # what is stashing?
+  750  # create a friendly link to a repository
+  751  git remote add rzgitme ~/zgitme
+  752  git fetch rzgitme
+  753  git log HEAD..FETCH_HEAD
+  754  git merge rzgitme/master
+  755  ls -l
+  756  ls -l | sort -f7
+  757  ls -l | sort -f 7
+  758  ls -l | sort -c 7
+  759  sort help
+  760  sort -help
+  761  man sort
+  762  ls -l | sort -k 7
+  763  man sort
+  764  ls -l | sort -k 7 -r
+  765  ls -l | sort
+  766  ls -l | sort -k 8 -n
+  767  ls -l | sort -k 9 -n
+  768  cd ~/zgitme
+  769  cat > mkchg.txt
+  770  ls *.sh
+  771  ./rebuildSummary.sh
+  772  while read i; do echo "$i"; done
+  773  while read i; do echo "$i"; done <summary.txt
+  774  while read i; do cat $i mkchg.txt; done <summary.txt
+  775  while read i; do catmkchg.txt >> $i; done <summary.txt
+  776  while read i; do cat mkchg.txt >> $i; done <summary.txt
+  777  while read i; do $(cat mkchg.txt) >> $i; done <summary.txt
+  778  history | tail -n 20
+  779  while read i; do cat $i mkchg.txt; done <summary.txt
+  780  cd zgitme
+  781  while read i; do cat $i mkchg.txt; done <summary.txt
+  782  ls
+  783  less summary.txt
+  784  while read i; do cat $i; done <summary.txt
+  785  while read i; do cat $i done <summary.txt
+  786  while read i; do echo $i done <summary.txt
+  787  while read i; do echo $i; done <summary.txt
+  788  while read i; do cat $i; done <summary.txt
+  789  while read i; do echo $i; done <summary.txt
+  790  less summary.txt
+  791  history | grep while
+  792  while read i; do cat $i mkchg.txt; done <summary.txt
+  793  while read i; do echo $i; done <summary.txt
+  794  cat summary.txt
+  795  while read i; do echo "cat mkchg.txt >> $i" ; done <summary.txt
+  796  while read i; do echo "cat mkchg.txt >> $i" ; done <summary.txt >mkchg.sh
+  797  less mkchg.sh
+  798  vim mkchg.sh
+  799  chmod 755 mk*.sh
+  800  ./mkchg.sh
+  801  less 16_file.txt
+  802  ls
+  803  less mkchg.txt
+  804  git status
+  805  # big oops
+  806  # i want to restore my files
+  807  git restore
+  808  git restore .
+  809  git status
+  810  less 16_file.txt
+  811  # this is a great way to undo file ops
+  812  history | grep i while
+  813  history | grep -i while
+  814  cat > mkchg.txt
+  815  less mkchg.txt
+  816  ls
+  817  vim mkchg.sh
+  818  ./mkchg.sh
+  819  git status
+  820  git add .
+  821  git status
+  822  git commit
+  823  cd ~/zgit
+  824  git fetch rzgitme
+  825  git log HEAD..FETCH_HEAD
+  826  gitk HEAD..FETCH_HEAD
+  827  # so i decide i want to merge it
+  828  # we have seen this with the merge command
+  829  # now we can see it with the pull command
+  830  git pull . rzgitme
+  831  git pull . remotes/tzgitme/master
+  832  git pull . remotes/rzgitme/master
+  833  # so again insertions are lines
+  834  git log
+  835  cat 20_file.txt
+  836  cat >> 20_file.txt
+  837  cd ~/zgitme
+  838  cd ~/zgit
+  839  git commit -a -m "file 20 changes"
+  840  cd ~/zgitme
+  841  ls
+  842  git pull
+  843  git config -l
+  844  man git-config
+  845  man git-push
+  846  man git-cvsmigration
+  847  man gitcvs-migration
+  848  #
+  849  # Exploring git history
+  850  #
+  851  git log
+  852  cd ~/zgit
+  853  git log
+  854  tree -a
+  855  git repack
+  856  tree -a
+  857  git prune-packed
+  858  tree -a
+  859  git status
+  860  # does pack only take inactive objects
+  861  # ?
+  862  git log
+  863  git show 6c912f51ef7b99
+  864  git show HEAD
+  865  git log
+  866  git show e29cf0dbd5c # this is one commit back from the head
+  867  git show exp
+  868  # does not work bc i deleted it
+  869  git show HEAD^ # parent of head
+  870  git show HEAD^^ # parent of head
+  871  git show~7
+  872  git show HEAD~7
+  873  git show HEAD~0
+  874  git show HEAD~1
+  875  # so ~ will let you choose every iteration
+  876  git log
+  877  git tag bigImport e29cf0dbd
+  878  git show bigImport 
+  879  git diff bigImport HEAD
+  880  git branch stable bigImport 
+  881  git branch
+  882  # and if you want to roll back a change
+  883  git reset --hard HEAD^
+  884  ls
+  885  git log
+  886  cat 16_file.txt
+  887  git reset --hard HEAD^
+  888  git log
+  889  cat 16_file.txt
+  890  git pull . remotes/rzgitme/master
+  891  cat 16_file.txt
+  892  git log
+  893  git grep "16"
+  894  # wow! that is useful
+  895  git log
+  896  git tag v1.0 2f8215f010cb
+  897  git log
+  898  git tag v1.1 1f59677fe6
+  899  git log v1.0..v1.1
+  900  git log v1.0..v1.1 -p
+  901  # there is a bit of tricky stuff with ranges
+  902  # seeing only changed
+  903  # seeing twice changed
+  904  # i could download a repositroy and work with these
+  905  #
+  906* man gittutorial-2
+  907  ls
+  908  mkdir zwiz
+  909  cd zw
+  910  cd zwiz
+  911  git init
+  912  tree -a
+  913  cat > file.txt
+  914  git status
+  915  git add .
+  916  git status
+  917  git commit -a -m "Initial Commit"
+  918  git show 100644
+  919  git show f92f84e
+  920  cat > file.txt
+  921  git commit -a -m "Add Emphasis"
+  922  git diff HEAD HEAD^
+  923  tree -a
+  924  gitk
+  925  git log
+  926  git cat-file -t 6318cfbb
+  927  git cat-file commit 6318cfbb
+  928  git ls-tree 9044010cd8
+  929  git cat-file -t 7bc507a9 blob
+  930  git cat-file -t 7bc507a9
+  931  git cat-file blob 7bc507a9
+  932  find .git/objects
+  933  # we use find here because it does a nice layout
+  934  # the location of the head of the archive is easy to find
+  935  cat .git/refs/heads/master
+  936  git cat-file commit 6318cfbb839b
+  937  git show 90440
+  938  git show f92f8
+  939  git show 90440
+  940  git show f92f8
+  941  # many of the commands dealing with trees take tree adjacent arguments
+  942  # ie you can use the commit object id in place of the tree object id and git will figure it out
+  943  # tree adjacent is my term.  tree-ish is a common usage
+  944  cat >>file.txt
+  945  cat file.txt
+  946  cat file.txt >> deleteme.txt
+  947  ls
+  948  cat deleteme.txt
+  949  cat deleteme.txt ls -l
+  950  ls -l
+  951  rm deleteme.txt
+  952  l
+  953  git diff
+  954  # this shows the diff between the working tree and objects defined at HEAD
+  955  git status
+  956  git add file.txt
+  957  git status
+  958  git diff
+  959  # now that the file has entered into the index by being added
+  960  # it does not appear in the diff
+  961  git diff HEAD
+  962  # this gives the result as before - it compares against the index file
+  963  # so if we want to see what is in the index file we use git to translate the binary...
+  964  git ls-files --stage
+  965  file .git/objects
+  966  file .git/objects/*
+  967  file .git/objects/*/*
+  968  history | grep file
+  969  ls
+  970  file .git/objects/??/*
+  971  # it does not appear the file is in the objects tree yet
+  972  history | tail 
+  973  git ls-files
+  974  fit ls-files --stage
+  975  git ls-files --stage
+  976  # so the git tools check ids both in the index and in objects
+  977  git cat-file -t a117
+  978  git cat-file blob a117
+  979  # no tree, no commit, just the blob file waiting to be applied
+  980  # 
+  981  cat >>file.txt
+  982  git status
+  983  git diff
+  984  # now we see the diff between the index and the working tree
+  985  git diff HEAD
+  986  git diff
+  987  git diff HEAD
+  988  # effectively this shows us the diff between the HEAD and the working tree
+  989  git diff --cached
+  990  # this gives us the diff between HEAD and index.
+  991  git diff HEAD INDEX
+  992  # git diff HEAD INDEX - did not work :-(
+  993  # so now we commit the changes in index... drop -a
+  994  git commit -m "repeat"
+  995  git status
+  996  # still one file marked as modified.
+  997  git diff HEAD
+  998  # adding a file loads it into the index
+  999  cat >>closing.txt
+ 1000  git add closing.txt
+ 1001  git ls-files --stage
+ 1002  # again, nothing but blobs in the index...
+ 1003  git cat-file -p closing.txt
+ 1004  git cat-file -p c3f68
+ 1005  git status
+ 1006  # another way to look at diff.  The dividing line is set at In Git/Not in Git
+ 1007  # so a diff of closeing txt is blank because the index matches the working tree
+ 1008  # the index also manages trees by branch and merge operations.
+ 1009  man gitglossary
+ 1010* apropos administration
+ 1011  man git-htmldocs
+ 1012  find git-htmldocs
+ 1013  locate git-htmldocs
+ 1014  sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
+ 1015  whereis git
+ 1016  brew --help
+ 1017  brew list git
+ 1018  brew info git
+ 1019  git-gui
+ 1020  locate git-htmldocs
+ 1021  info git-htmldocs
+ 1022  info
+ 1023  history
+ 1024  cd ..
+ 1025  ls
+ 1026  cd Documents
+ 1027  ls
+ 1028  cd ..
+ 1029  ls
+ 1030  cd Projects
+ 1031  ls
+ 1032  clear
+ 1033  ls
+ 1034  techNotes
+ 1035  mkdir techNotes
+ 1036  cd techNotes
+ 1037  ls
+ 1038  git init
+ 1039  mkdir notes
+ 1040  mkdir scripts
+ 1041  ls
+ 1042  git status
+ 1043  cd notes
