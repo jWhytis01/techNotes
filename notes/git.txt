@@ -993,3 +993,169 @@ this is magic - shows what is in the index, ie staged!
 
 So now i'm going to add todays notes
 
+ 1078* cd zx
+ 1079* git init
+ 1080* cat >> page_01.txt
+ 1081* git add .
+ 1082* git commit
+ 1083* cat >> page_01.txt
+ 1084* git commit -a "second commit"
+ 1085* git commit -a -m "second commit"
+ 1086* cat >> page_01.txt
+ 1087* git commit -a -m "third commit"
+ 1088* git log
+ 1089* git log -p
+ 1090* git status
+ 1091* git revert 7ebb867d
+ 1092* cat page_01.txt
+ 1093* git restore
+ 1094* git restore .
+ 1095* git revert
+ 1096* git restore -help
+ 1097* git restore . --ignore-unmerged
+ 1098* cat page_01.txt
+ 1099* git revert -help
+ 1100* git revert
+ 1101* git revert HEAD
+ 1102* git merge --abort
+ 1103* git stash save --keep-index --include-untracked
+ 1104* rm page_01.txt
+ 1105* git revert HEAD
+ 1106* ls
+ 1107* git ls-index
+ 1108* git list
+ 1109* git status
+ 1110* git restore --staged page_01.txt
+ 1111* git status
+ 1112* git revert --continue
+ 1113* ls
+ 1114* git restore page_01.txt
+ 1115* ls
+ 1116* cat page_01.txt
+ 1117* history | tail -n 20
+ 1118* history | tail -n 30
+ 1119* git stash
+ 1120* git stash -help
+ 1121* git stash show
+ 1122* clear
+ 1123* git log
+ 1124* git revert HEAD
+ 1125* ls
+ 1126* cat page_01.txt
+ 1127* git log
+ 1128* git restore cf89feba
+ 1129* git revert cf89feba
+ 1130* git log -p
+ 1131* git revert HEAD
+ 1132* cat page_01.txt
+ 1133* git log -p
+ 1134* git status
+ 1135* # let me put something into the index...
+ 1136* cat >> page_01.txt
+ 1137* git status
+ 1138* git add page_01.txt
+ 1139* git status
+ 1140* git diff
+ 1141* git diff --cached
+ 1142* echo "this \nis \none"
+ 1143* git status
+ 1144* cat page_01.txt
+ 1145* git restore --staged page_01.txt
+ 1146* cat page_01.txt
+ 1147* git status
+ 1148* # so that just pushed it out of the index
+ 1149* git diff
+ 1150* # now diff sees the changes.
+ 1151* cat page_01.txt
+ 1152* git diff
+ 1153* git stash
+ 1154* git log
+ 1155* cat page_01.txt
+ 1156* git stash show
+ 1157* git stash show -p
+ 1158* man git-stash
+ 1159* git stash list
+ 1160* cat >> page_01.txt
+ 1161* git stash
+ 1162* git stash list
+ 1163* git log
+ 1164* git show
+ 1165* git tag rr_01 'This is a rollback of a rollback!'
+ 1166* git tag rr_01
+ 1167* git log
+ 1168* git grep henry
+ 1169* git grep -i henry
+ 1170* man git-grep
+ 1171* git grep -i rr01
+ 1172* git log
+ 1173* git grep -i rr_01
+ 1174* # doesn't see tags? just blobs?
+ 1175* git diff HEAD HEAD^
+ 1176* git diff HEAD^ HEAD
+ 1177* git log
+ 1178* git log -p
+ 1179* git diff HEAD HEAD^
+ 1180* git diff HEAD^ HEAD
+ 1181* # so we can look at diff as from --> to changes
+ 1182* git diff HEAD^^ HEAD
+ 1183* git diff HEAD~3 HEAD
+ 1184* git diff HEAD~4 HEAD
+ 1185* # a great way to sumarize cumulative changes!
+ 1186* find .git/objects/??/*
+ 1187* find .git/*
+ 1188* find -d .git/*
+ 1189* man find
+ 1190* man find | grep -i -b3 -a3 directory
+ 1191* exit
+ 1192* history | tail -n20
+ 1193* git ls-files --stage
+ 1194* cd zx
+ 1195* git ls-files --stage
+ 1196* clear
+ 1197* git ls-files --stage
+ 1198* git ls-files
+ 1199* git ls-files help
+ 1200* git ls-files -help
+ 1201* git switch makeStage
+ 1202* git switch -b makeStage
+ 1203* git switch -c makeStage
+ 1204* git ls-files --stage
+ 1205* cat >> ms.txt
+ 1206* git add .
+ 1207* git ls-files --stage
+ 1208* # so it lists them but does not show branch info...
+ 1209* git show-index
+ 1210* git show :file
+ 1211* git show :
+ 1212* git show :*
+ 1213* git show :069a
+ 1214* git show :069a7ee9e2
+ 1215* git ls-files
+ 1216* git status
+ 1217* git restore --staged ms.txt
+ 1218* git status
+ 1219* git ignore ms.txt
+ 1220* tree -a
+ 1221* ls
+ 1222* git status
+ 1223* cat > .gitignore
+ 1224* git status
+ 1225* cat >> .gitignore
+ 1226* git status
+ 1227  git commit -a -m "I cleaned up my notes\n"
+ 1228  git status
+ 1229  cd ..
+ 1230  git log -p
+ 1231  cd notes
+ 1232  ls
+ 1233  history >> git.txt
+ 1234  git status
+ 1235  less git.txt
+ 1236  git restore git.txt
+ 1237  less git.txt
+ 1238  man tail
+ 1239  less git.txt
+ 1240  history | tail
+ 1241  history | tail -n 230 | less
+ 1242  history | tail -n 164 | less
+ 1243  history | tail -n 166 | less
