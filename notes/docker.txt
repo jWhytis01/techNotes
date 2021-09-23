@@ -1,47 +1,3 @@
-    1  ls
-    2  su - admin_jason
-    3  cd ..
-    4  ls
-    5  su - admin_jason
-    6  man ln
-    7  ls
-    8  su - admin_jason
-    9  sudo admin_jason
-   10  help sudo
-   11  sudo help
-   12  sudo -help
-   13  sudo -u admin_jason
-   14  man sudo
-   15  sudo restart
-   16  sudo reboot
-   17  history | tail -n
-   18  history | tail -n 20
-   19  ls
-   20  ls -a
-   21  git status
-   22  exit
-   23  ls
-   24  wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
-   25  ls
-   26  sudo dpkg -i chrome-remote-desktop_current_amd64.deb 
-   27  apt install xvfb
-   28  sudo apt install xvfb
-   29  apt --fix-brokent install
-   30  sudo apt --fix-broken install
-   31  sudo dpkg -i chrome-remote-desktop_current_amd64.deb 
-   32  clear
-   33  DISPLAY= /opt/google/chrome-remote-desktop/start-host --code="4/0AX4XfWg7hJwDgM0wXKGozkW8Jo-qpp921DrGTAEtUTUV18xgP--FzrOaoz4AbSfKpONE5A" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$(hostname)
-   34  cat sysinfo.txt
-   35  cat >> sysinfo.txt
-   36  docker run -d 80:80 docker/getting-started
-   37  sudo docker run -d 80:80 docker/getting-started
-   38  sudo docker run -d -p 80:80 docker/getting-started
-   39  docker --help
-   40  docker
-   41  docker container ls
-   42  sudo docker container ls
-   43  clear
-   44  history | less
    45  #
    46  # Docker Tutorial
    47  #
@@ -66,7 +22,11 @@
    66  git commit -a -m "Gather updated congfig file"
    67  git status
    68  #
-   69  # https://www.youtube.com/watch?v=8fi7uSYlOdc
+   
+This was a very good video on the tech behind docker.
+How did the linux os grow to support this tech?
+
+69  # https://www.youtube.com/watch?v=8fi7uSYlOdc
    70  # lizrice
    71  #
    72  # Name spaces
@@ -92,46 +52,9 @@
    92  git add docksim/
    93  git status
    94  cat >> .gitignore
-   95  git status
-   96  clear
-   97  history | tail -n 20
-   98  # sidebar - skinny my prompt
-   99  echo $PS1
-  100  echo $PS1 >shellmod.sh
-  101  vim shellmod.sh 
-  102  ls
-  103  chmod 755 shellmod.sh 
-  104  ./shellmod.sh 
-  105  vim shellmod.sh 
-  106  ./shellmod.sh 
-  107  vim shellmod.sh 
-  108  ./shellmod.sh 
-  109  echo $PS1
-  110  vim shellmod.sh 
-  111  ./shellmod.sh 
-  112  echo $PS1
-  113  ./shellmod.sh 
-  114  echo $PS1>shell.txt
-  115  vim shell.txt 
-  116  PS1=$(cat shell.txt)
-  117  ls
-  118  rm shellmod.sh 
-  119  ls
-  120  rm chrome-remote-desktop_current_amd64.deb 
-  121  ls
-  122  cd docksim/
-  123  vim dockersim.sh 
-  124  ps fax
-  125  clear
-  126  ls /proc
-  127  ls -l /proc/self
-  128  pid
-  129  echo $PID
-  130  cd ..
-  131  vim shell.txt 
-  132  PS1=$(cat shell.txt)
-  133  user
-  134  # so back to the tutorial
+  
+
+134  # so back to the tutorial
   135  #
   136  # first we create a timer namesapce
   137  # all this does is allows us to change the hostname
@@ -147,17 +70,14 @@
   147  # you set the root to a directory that has an os
   148  # and it tops out there
   149  #
-  150  # a shore digresion - in the procs directrour eaech process has a directory and you can see what is happening there
+  150  # a short digresion - in the procs directory eaech process has a directory and you can see what is happening there
   151  # this is the same as ps...
   152  #
-  153  ls -l /procs
-  154  ls -l /pros
   155  ls -l /proc
   156  ls -l /proc/1
   157  tree /proc
   158  tree /proc | less
   159  # Buenus!
-  160  history | tail -n 30
   161  # so we have the timer namespace, we have chrooted our directory
   162  # time to setup the next namespace
   163  # ha ha!
@@ -172,258 +92,121 @@
   172  # in the filesystem they can be found in /sys/fs/cgroup
   173  # for docker folders are created in the hierarchy
   174  # dup files are setup then for every runninginstance na id is given and dups are created again.  constraints are assigned within the folders
-  175  PS1=$(cat shell.txt)
-  176  ls
-  177  wget https://golang.org/dl/go1.17.1.linux-amd64.tar.gz
-  178  ls
-  179  gzip -help
-  180  gzip -d go1.17.1.linux-amd64.tar.gz 
-  181  ls
-  182  tar -help
-  183  tar --help
-  184  tar -xf go1.17.1.linux-amd64.tar 
-  185  ls
-  186  cd go
-  187  ls
-  188  cd bin
-  189  ls
-  190  export PATH=$PATH:/usr/local/go/bin
-  191  go version
-  192  echo $PATH
-  193  export PATH=$PATH:~/go/bin
-  194  go version
-  195  cd ~
-  196  vim .profile
-  197  cd ~
-  198  cat >> .gitignore
-  199  git status
-  200  cat >>.gitignore
-  201  git add shell.txt 
-  202  git status
-  203  git commit -a -m "adding some system changes"
-  204  git status
-  205  go version
-  206  cd go
-  207  ls
-  208  cd doc
-  209  ls
-  210  html2text go1.17.html 
-  211  cd ~
-  212  ls
-  213  rm go1.17.1.linux-amd64.tar 
-  214  ls
-  215  clear
+  
+
   216  git clone http://github.com/lizrice/containers-from-scratch
-  217  ls
   218  cd containers-from-scratch/
-  219  ls
   220  less README.md 
   221  less main.go
   222  vim main.go
-  223  ls
-  224  ls
   225  locate docker
-  226  clear
-  227  docker run -d -p 80:80 docker/getting-started
+  
+
+so we start the container that houses the getting started tutorial
+
+227  docker run -d -p 80:80 docker/getting-started
   228  sudo docker run -d -p 80:80 docker/getting-started
-  229  docker container
-  230  docker container list
-  231  suod docker container list
   232  sudo docker container list
-  233  chrome
-  234  exit
-  235  clear
-  236  history
-  237  whereis chrome
-  238  ls
-  239  whereis google-chrome
-  240  vim shell.txt 
-  241  exit
-  242  ls
   243  mv containers-from-scratch cfs
-  244  ls
-  245  ls cfs/*
-  246  ls cfs/
-  247  # aplause aplause
   248  git clone https://github.com/docker/getting-started/tree/master/app
-  249  ls
   250  git clone https://github.com/docker/getting-started/tree/master/app
-  251  ls
   252  git credential-manager uninstall
   253  git clone http://github.com/docker/getting-started/tree/master/app
   254  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   255  sudo dpkg -i google-chrome-stable_current_amd64.deb 
-  256  sudo apt-get --fix-installation
   257  sudo apt --fix-installation
-  258  apt install fonts-liberation
   259  sudo apt install fonts-liberation
-  260  apt --fix-broken install
   261  sudo apt --fix-broken install
-  262  chrome
-  263  locate app.zip
-  264  ls
   265  rm google-chrome-stable_current_amd64.deb 
-  266  ls
-  267  cd downlaods
   268  cd Downloads/
-  269  ls
   270  git status
-  271  cd ..
-  272  ls
-  273  ls -a
-  274  ls config/
-  275  ls .config/
-  276  cat .gitignore 
-  277  cd .config/
-  278  ls
-  279  cd i3
-  280  ls
-  281  cat config 
-  282  cd ~
-  283  ls
-  284  ls
   285  # note to self, it is easier to do mod e
   286  ls
-  287  cd dow
   288  cd Downloads/
-  289  ls
-  290  gzip -d app.zip
-  291  man gzip | grep -i .zip
-  292  man gzip | grep -i .zip gzip -d app.zip
-  293  man gzip | grep -i [!gzip]
-  294  man gzip | grep -i [!g"zip"]
-  295  man gzip | grep -i zip
-  296  sudo apt-get install unzip
+  
+
+
+download VS Code and setup git in the app project
+load the project into Code via the git tree.
+Way cool!
+
+296  sudo apt-get install unzip
   297  unzip app.zip 
-  298  ls
-  299  mv app ~/app
-  300  ls
-  301  cd ..
-  302  ls
-  303  cd app
-  304  ls
-  305  cd ..
-  306  ls
-  307  cd Downloads/
-  308  ls
-  309  dpkg
-  310  dpkg code_1.60.1-1631294805_amd64.deb 
-  311  dpkg --help
-  312  dpkg code_1.60.1-1631294805_amd64.deb 
-  313  dpkg --help
-  314  dpkg -i code_1.60.1-1631294805_amd64.deb 
   315  sudo dpkg -i code_1.60.1-1631294805_amd64.deb 
   316  whereis python
   317  ext install ms-python.python
-  318  ls
-  319  cd ..
-  320  ls
-  321  cd app
-  322  ls -a
-  323  git init
   324  git status
   325  git add .
-  326  ls
-  327  git status
   328  git commit -a -m "Load App"
-  329  git status
-  330  clear
-  331  cd ..
-  332  cd app/
-  333  ls
-  334  From node:12-alpine
+  
+
+
+334  From node:12-alpine
   335  FROM node:12-alpine
   336  vim Dockerfile
   337  cat >>Dockerfile
-  338  ls
-  339  sudo apt-get update
-  340  apt-get install clipit
-  341  sudo apt-get install clipit
-  342  google-chrome
-  343  exit
-  344  ps
-  345  pid
+  
+Let's look at processes!
+
+345  pid
   346  ps fax
   347  ps
   348  ps fax
   349  clear
-  350  whereis clipit
-  351  ls
-  352  clear
-  353  ls
-  354  exit
-  355  cd .config
-  356  ls
-  357  cd i3
-  358  ls
-  359  vim config 
-  360  ls
-  361  vim config
-  362  cd ~
-  363  ls
-  364  cd app
-  365  ld
-  366  ls
   367  cat Dockerfile 
-  368  docker build -t getting-started
-  369  docker build -t getting-started .
   370  sudo docker build -t getting-started .
-  371  ls
   372  git status
   373  git add Dockerfile 
   374  git commit -a -m "Added Dockerfile"
-  375  docker container list
+
+This next bit can be a bit confusing if you don't remember
+there is a getting started tutorial service and a getting started sample app
+the tutorial is on 80:80 and the app you are using for the tutorial is on 3000:3000
+  
+
+375  docker container list
   376  sudo docker container list
-  377  docker run -dp 3000:3000 getting-started
   378  sudo docker run -dp 3000:3000 getting-started
   379  sudo docker container list
   380  # the -d puts the container in detached mode - ie it is not tied to the teminal
   381  the 3000:3000 gives us a port with which to comunicate with the application
-  382  history | grep docker
   383  sudo docker run -d -p 80:80 docker/getting-started
   384  sudo docker container list
-  385  docker build -t getting-started
-  386  docker build -t getting-started .
   387  sudo docker build -t getting-started .
-  388  ls -a
-  389  docker run -dp 3000:3000 getting-started
   390  sudo docker run -dp 3000:3000 getting-started
-  391  docker ps
+
+
+here we start using the short names to refer to the GUIDs attached to container names
+
   392  sudo docker ps
-  393  clear
-  394  history | tail -n 25
-  395  sudo docker ps
-  396  ls
-  397  sudo docker ps
-  398  docker stop 4569
   399  sudo docker stop 4569
-  400  docker ps
   401  sudo docker ps
   402  sudo docker rm 4569
   403  sudo docker run -dp 3000:3000 getting-started
-  404  docker push many21ai/getting-started:tagname
-  405  sudo docker push many21ai/getting-started:tagname
   406  sudo docker push many21ai/getting-started
-  407  docker login -u many21ai
   408  sudo docker login -u many21ai
+
   409  # so now we have the connection to docker hub setup.  It looks like it strores this so is ist a onetime thing?
-  410  docker tag getting-started many21ai/getting-started
+still unknown
+
+
   411  sudo docker tag getting-started many21ai/getting-started
   412  sudo docker push many21ai/getting-started
-  413  ls
-  414  cd src
-  415  ls
   416  chmod 755 commands.sh 
   417  ./commands.sh
   418  sudo docker containter --help
   419  sudo docker containter list
   420  sudo docker container list
-  421  sudo docker exec -t -i 6c49 /bin/bash
-  422  docker run -it ubuntu ls /
+  
+
+I did some comtainer cleanup
+and now we execute some commands within a containter
+this is to prove two of the same container images create their own workspace
+
+
+421  sudo docker exec -t -i 6c49 /bin/bash
   423  sudo docker run -it ubuntu ls /
   424  clear
-  425  sudo docker container list
-  426  sudo docker containter list
   427  sudo docker container list
   428  sudo docker stop 6c49
   429  sudo docker container list
@@ -433,11 +216,13 @@
   433  # so now we are going to create a named volume to persist our data
   434  # this is easy as we are going to create a mount poiont to be remounted
   435  #
-  436  sudo docker volumne create todo-db
   437  sudo docker volume create todo-db
   438  # so docker is managing a bunch of things under the covers here...
   439  # it has put this volume somewhere on the file system
-  440  find todo-db
+  
+/var/docker/ has several directories includeing volumes.  It is named here.
+
+
   441  cd /
   442  find todo-db
   443  cd ~
@@ -452,9 +237,11 @@
   452  # that did it, no need to stop with the use of -f
   453  # now to restart using our named mount point
   454  docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
-  455  sudo docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+  
+3000:3000 is a named value pair?  It is a definition of what is inside and outside the container/???
+
+455  sudo docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
   456  sudo docker ps
-  457  sudo docker rm -f 3acd5
   458  sudo docker rm -f 3ad5
   459  sudo docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
   460  sudo docker rm -f 31cb
@@ -471,29 +258,22 @@
   471  sudo docker volume inspect todo-db
   472  # /var/lib/docker/volumes/todo-db/_data
   473  # this follows the linux filesystem standard
-  474  find todo-db
-  475  updatedb
-  476  sudo updatedb
-  477  find todo-db
-  478  pushd /
-  479  find todo-db
-  480  sudo find todo-db
-  481  find . -name todo-db
+  
+Lets take a look...
+
   482  sudo find . -name todo-db
   483  clear
   484  # beware find syntax 
   485  sudo find . -name todo-db
-  486  pushd /var/lib/docker
-  487  ls
-  488  sudo ls
-  489  cd containers
-  490  sudo ls
+
+the . above means current path - you can speisify another path here.  
+
+486  pushd /var/lib/docker
   491  # so /var/lib/docker holds all the data for docker containters etc
   492  sudo cat 09*
-  493  popd
-  494  #
-  495  popd
-  496  # Let's talk bind points
+  
+
+496  # Let's talk bind points
   497  # 
   498  # bind points give you active access into the file system
   499  #
@@ -502,60 +282,31 @@
   502  sudo docker ps
   503  sudo docker rm -f 09f18
   504  sudo docker ps
-  505  sudo docker run -dp 3000:3000 -w /app -v "$(pwd):/app \
-node:12-alpine \
-sh -c "yarn install && yarn run dev"
 
-  506  sudo docker run -dp 3000:3000 -w /app -v "$(pwd):/app \
-node:12-alpine \
-sh -c "yarn install && yarn run dev"
 
-sudo docker run -dp 3000:3000 -w /app -v "$(pwd):/app node:12-alpine sh -c "yarn install && yarn run dev"
+this never worked as advertised - i looked up how to do bind mounts and figured it out.
+There is a lot of realative pathing to pay attention to.
+
   507  sudo docker run -dp 3000:3000 -w /app -v "$(pwd):/app" node:12-alpine sh -c "yarn install && yarn run dev"
   508  sudo docker logs -f 35f4
   509  sudo docker rm -f 35f4
-  510  cd ~
-  511  ls
-  512  sudo docker run -dp 3000:3000 -w /app -v "$(pwd):/app" node:12-alpine sh -c "yarn install && yarn run dev"
-  513  sudo docker logs -f 9b04
-  514  cd app
-  515  ls
-  516  pwd
-  517  cd ..
-  518  echo docker run -dp 3000:3000 -w /app -v "$(pwd):/app" node:12-alpine sh -c "yarn install && yarn run dev"
-  519  sudo docker run -dp 3000:3000 -w /app -v "$(pwd)/app" node:12-alpine sh -c "yarn install && yarn run dev"
-  520  sudo docker logs -f 7f8b
-  521  echo docker run -dp 3000:3000 -w /app -v "$(pwd)/app" node:12-alpine sh -c "yarn install && yarn run dev"
+
+so there was a bunch of try, review logs, try again.
+
+I eventaully got tired of the comand line...
+
   522  echo docker run -dp 3000:3000 -w /app -v "$(pwd)/app" node:12-alpine sh -c "yarn install && yarn run dev" > cmd.sh
   523  chmod 755 cmd.sh
   524  ./cmd.sh
   525  vim cmd.sh 
-  526  ./cmd.sh
-  527  vim cmd.sh 
-  528  ./cmd.sh
-  529  sudo docker logs -f e45c
-  530  sudo docker ps
-  531  sudo docker containter list
-  532  sudo docker container list
-  533  vim cmd.sh
-  534  cd /
-  535  ls
-  536  cd home
-  537  ls
-  538  cd jwhiteis/
-  539  ls
-  540  cd app
-  541  ls
-  542  cat package.json 
-  543  cd ..
-  544  clear
-  545  ls
-  546  vim cmd.sh 
-  547  sudo cmd.sh
-  548  sudo ./cmd.sh
-  549  docker ps
   550  sudo docker ps
-  551  sudo ls /var/lib/docker/container
+  
+figuring out the differences between active and inactive containters, docker container list -a gets everyting user installed
+the ps gets what is running
+many times when the container failed some step in it's launch proces it would just shut itself off.  Not sure if this is a bug or feature ;-)
+
+
+551  sudo ls /var/lib/docker/container
   552  sudo ls /var/lib/docker/
   553  sudo ls /var/lib/docker/containers
   554  vim cmd.sh 
@@ -579,102 +330,36 @@ sudo docker run -dp 3000:3000 -w /app -v "$(pwd):/app node:12-alpine sh -c "yarn
   572  time
   573  echo date
   574  date
+
   575  # an alternative to bind mounts is named volumes
+I never came back to this but I should...
+If there is a distinction here it is not jumping out at me.
+bind mounts attach to the current file system and are good for syncing in dev changes
+volumnes are managed by docker and good for portablity
+
+
   576  vim cmd.sh
-  577  sudo .\cmd.sh
-  578  sudo ./cmd.sh
-  579  sim cmd.sh 
-  580  vim cmd.sh
-  581  sudo ./cmd.sh
-  582  vim cmd.sh
-  583  sudo ./cmd.sh
-  584  sudo docker logs -f 99b6
-  585  cd app
-  586  date
-  587  ls -l
-  588  cd ..
-  589  ls
-  590  ls -l
+
   591  # there it is!
   592  sudo docker logs -f 99b6
   593  sudo docker exec 99b6
   594  sudo docker exec 99b6 /bin/bash
   595  sudo docker ps
-  596  sudo ./cmd.sh
-  597  docasdfa;lsja;lsja;lsjalksjfalksjoasjoaifanva;vfvksavlkacv
-  598  docker container list -a
-  599  sudo docker container list -a
-  600  ls /var/lib/docker/containers
-  601  ls /var/lib
-  602  ls /var/lib/docker
-  603  sudo ls /var/lib/docker
   604  sudo ls /var/lib/docker/containers
   605  sudo ls /var/lib/docker/containers > ~/containers.txt
-  606  less containers.txt 
-  607  clear
-  608  sudo docker ps
   609  chmod 755 containers.txt 
   610  ./containers.txt 
-  611  sudo docker rm -f 0213
-  612  ./containers.txt 
-  613  sudo ls /var/lib/docker/containers
-  614  ls
-  615  rm containers.txt 
-  616  ls
-  617  clear
-  618  #
-  619  clear
-  620  ls
-  621  vim cmd.sh 
-  622  sudo ./cmd.sh
-  623  sudo docker logs -f 1b825
-  624  sudo docker rm -f 1b8
-  625  vim cmd.sh 
-  626  sudo ./cmd.sh
+  
+use the directory listing to create remove commands for all the containers.
+
   627  sudo docker logs -f 5fe4
   628  sudo docker rm -f 5fe4
-  629  vim cmd.sh 
-  630  sudo ./cmd.sh
-  631  vim cmd.sh 
-  632  cp cmd.sh app/cmd.sh
-  633  cd app/
-  634  ls
-  635  sudo ./cmd.sh
-  636  vim cmd.sh 
-  637  sudo ./cmd.sh
-  638  sudo docker logs -f 745b
-  639  ls
-  640  sudo docker ps
-  641  sudo docker rm -f 745b
-  642  sudo ls /var/lib/docker/containers
-  643  clear
-  644  cd ~
-  645  ls
-  646  vim cmd.sh
-  647  ls
-  648  cd app
-  649  cat package.json 
-  650  tree -a
-  651  tree
-  652  rm comands.sh
-  653  rm src/commands.sh 
-  654  rm src/yarn.lock 
-  655  rm yarn.lock 
-  656  tree
-  657  git status
-  658  git add .
-  659  git commit -a -m "Keeping up with the jones."
-  660  cd ..
-  661  ls -a
-  662  rm -f yarn.lock
-  663  clear
-  664  ls
-  665  ls -a
-  666  sudo docker ontainers list -a
-  667  sudo docker container  list -a
-  668  ls
-  669  ls ~ ls/app
-  670  ls ~ app/
+  
+trying to troubleshoot the tutorial
+May want to look into yarn...
+
+yarn is a package manager mostly built for deploying node.js projects
+
   671  # ans of attack
   672  # try to fix the tutrial
   673  #  find a subroup on reddit
@@ -698,6 +383,19 @@ sudo docker run -dp 3000:3000 -w /app -v "$(pwd):/app node:12-alpine sh -c "yarn
   691  sudo docker stop 6
   692  sudo docker ps
   693  sudo docker build -t getting-started ..
+
+
+It is strange thinking about the build...
+we build the package
+the package starts
+we check the logs
+after that we can run the package.  It has been build.
+We are using a docker file to express the build
+from there it can be run
+If it is using a bind mount we can operate on it on the system
+If it is using a volumne mount ... is there anything that really keeps us from operating on it other than good taste?
+
+
   694  cd app
   695  sudo docker build -t getting-started .
   696  # that worked and included the full build with yarn.
@@ -712,6 +410,10 @@ sudo docker run -dp 3000:3000 -w /app -v "$(pwd):/app node:12-alpine sh -c "yarn
   705  # if two containers are on the same metwork they can talk, if they are not they can not
   706  #
   707  # docker lets us create networks
+
+i HATE when they use the same name for multiple things.. which @#$%#$% getting started?
+
+
   708  docker network create todo-app-net
   709  sudo docker network create todo-app-net
   710  cd ..
@@ -720,40 +422,35 @@ sudo docker run -dp 3000:3000 -w /app -v "$(pwd):/app node:12-alpine sh -c "yarn
   713  sudo ./cmdsql.sh
   714  sudo ps
   715  sudo docker ps
+
+*************88
+take a look at the network we created.
+
   716  sudo docker network -f list
   717  sudo docker network ls
-  718  git status
-  719  git add .
-  720  git commit -a -m "more changes to track"
-  721  git status
-  722  cd app
-  723  git status
-  724  git commit -a -m "track app changes"
-  725  cd ..
-  726  sudo docker containter list -a
-  727  sudo docker containter list
-  728  sudo docker container list -a
-  729  sudo docker rm -f 1b3
-  730* 
+  
+ 7730* 
   731  sudo docker container list -a
   732  sudo docker rm -f 68
   733  sudo docker container list -a
   734  sudo docker rm -f 65
   735  sudo docker container list -a
-  736  sudo ./cmdsql.sh
+ 28  sudo docker container list -a
+  729  sudo docker rm -f 1b3
+ 736  sudo ./cmdsql.sh
   737  # Ha! no errors!
   738  sudo docker container list -a
   739  # it took ports 33.6/tcp
-  740  sudo docker network inspect
-  741  sudo docker network inspect -a
   742  sudo docker network inspect --help
   743  sudo docker network inspect -f
-  744  sudo docker network inspect *
-  745  clear
   746  sudo docker ps
-  747  docker exec -it 70 mysql -p
   748  sudo docker exec -it 70 mysql -p
-  749  sudo docker run -it --network todo-app-net nicolaka/netshoot
+  
+
+So here we can bring in network utilities
+These must all run on very skinny versions of the linux os.
+
+749  sudo docker run -it --network todo-app-net nicolaka/netshoot
   750  # so netshoot is a network utilitiy that we set to use the docker network tod-app-net
   751  sudo docker container list -a
   752  sudo ./cmd.sh
