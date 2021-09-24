@@ -1,0 +1,144 @@
+BEGINNER'S GUIDE TO THE BASH TERMINAL
+
+NAVIGATION
+
+ls - list directory contents
+pwd - print name of current/working directory
+cd - change working directory
+pushd/popd - put working directory on a stack
+file - determine file type
+locate - find files by name
+updatedb - update database for locate
+which - locate a command
+history - display bash command history
+
+GETTING HELP
+
+whatis - display the on-line manual descriptions
+apropos - search the manual page names and descriptions
+man - an interface to the on-line reference manuals
+
+WORKING WITH FILES
+
+mkdir - create a directory/make directories
+touch - change file timestamps/create empty files
+cp - copy files and directories
+mv - move (rename) files
+rm - remove files or directories
+rmdir - remove empty directories
+
+TEXT FILES
+
+cat - concatenate files and print on the standard output
+more/less - file perusal filter for crt viewing
+nano - command line text editor
+
+USERS
+
+sudo - execute a command as superuser
+su - change user ID or become another user
+users - print the user names of users currently logged in
+id - print real and effective user and group IDs
+
+CHANGING FILE PERMISSIONS
+
+chmod - change permissions of a file
+
+KILLING PROGRAMS AND LOGGING OUT
+
+Ctrl+C - kill a running command
+killall - kill processes by name
+exit - log out of bash
+
+USEFUL SHORTCUTS
+
+Ctrl+D - signal bash that there is no more input
+Ctrl+L - redraw the screen
+Ctrl++ - make text bigger in terminal emulator
+Ctrl+- - make text smaller in terminal emulator
+
+cat—Concatenate files.
+sort—Sort lines of text.
+uniq—Report or omit repeated lines.
+wc—Print newline, word, and byte counts for each file.
+grep—Print lines matching a pattern.
+head—Output the first part of a file.
+tail—Output the last part of a file.
+tee—Read from standard input and write to standard output and files.
+
+Special characters ignored if in quotes
+$ (dollar sign), \ (backslash), and ` (back tick). 
+
+Parameter, arithmetic and command expansion all will happen in double quotes.
+All special characters are suppressed by single quotes.
+\ lets you escape  a single special character \$ \\ \`
+\ also is used to mark control codes
+
+
+Movement in the shell
+ctl-a Begin line
+ctl-E end line
+ctl-f right arrow
+ctl-b left arrow
+alt-f right arrow one word
+atl-b left arrow one word
+ctl-L clear command
+
+Killing and ynaking cutting and pasting
+items cut are stored in a buffer called the kill-ring
+
+
+ctrl-r search history - just start typing the command
+ctrl-j copies the line from history
+ctl-g or ctl-c to exit
+
+
+Furthur reading
+Readline man page
+History Expansion of the bash man page
+
+**************
+Security
+
+id 		- display user id
+chmod 	- change files properties
+umask 	- set the default file permissions
+su 		- run a shell as another user
+sudo 	- execute a command as another user or u using your superuser creds
+chown 	- change a file owner
+chgrp	- change a files group ownership
+passwd	- change a users password
+
+Directories need read and execute to be entered
+
+Thinking thru User/Group/Everyone permissions
+
+Users/Groups are maintained in the etc files.
+Where are the relationships stored.
+
+setuid bit oct 4000 sets the effective user id.  Runs as a spesified user, not the user running the program
+	ie run as super user
+
+setgid bit oct 2000 changes effective group id, user running does not need to be in group
+
+sticky bit - oct 1000 when applied to a directory means only owner of dir or file or SU can change the file
+
+User Permissions
+					Sys		User	Group	World
+							 rwx	 rwx	 rwx
+Under the Covers	0000 	0000 	0000 	0000
+Bits set with dec			7		6		4
+					0000	0111	0110	0100
+Bits set with Symbols *
+
+Symbols: Hier 	u - user, g - group, o - other (world), a all.
+Symbols: Perm	r - read, w - write, x - execute
+Symbols: Oper	+ - add permission - - remove permission = - add permission
+	Oper used with hier impact that hier
+	Oper used with no hier specified default to a - all.
+
+Symbols - System
+s - applied to User or Group changing effective permissions, t - limits write/delete
+u+s - setuid - Oct 4000 sets the effective user, usually to admin
+g+s - setgid - Oct 2000 sets the effective group
+ +t - sticky bit - Prevents anyone but owner, group owner or root from writing/deleting the file
