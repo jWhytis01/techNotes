@@ -1,0 +1,643 @@
+   45  #
+   46  # Docker Tutorial
+   47  #
+   48  # so we have a container up and running
+   49  #
+   50  # so we have a talk
+   51  #
+   52  ls
+   53  git init
+   54  cat >>.gitignore
+   55  git status
+   56  cat >>.gitignore
+   57  git status
+   58  git add .
+   59  git status
+   60  git commit -a -m "Initial Commit"
+   61  git config --global user.email "wjwhiteis@gmail.com"
+   62  git config --global user.name "Jason Whiteis"
+   63  git commit -a -m "Initial Commit"
+   64  git status
+   65  git add .
+   66  git commit -a -m "Gather updated congfig file"
+   67  git status
+   68  #
+   
+This was a very good video on the tech behind docker.
+How did the linux os grow to support this tech?
+
+69  # https://www.youtube.com/watch?v=8fi7uSYlOdc
+   70  # lizrice
+   71  #
+   72  # Name spaces
+   73  # Chroot
+   74  # cgroups
+   75  #
+   76  # the above are the components
+   77  # docker example
+   78  #
+   79  docker run --rm -it ubuntu /bin/bash
+   80  sudo docker run --rm -it ubuntu /bin/bash
+   81  #so that is what docker does
+   82  # so how does it do it
+   83  # there are namespaces in linux
+   84  # namespaces limits what a process can see
+   85  # there are about 6 of thems
+   86  vim dockersim.sh
+   87  ls
+   88  mkdir docksim
+   89  mv dockersim.sh docksim/
+   90  ls docksim/
+   91  git status
+   92  git add docksim/
+   93  git status
+   94  cat >> .gitignore
+  
+
+134  # so back to the tutorial
+  135  #
+  136  # first we create a timer namesapce
+  137  # all this does is allows us to change the hostname
+  138  # so far so good
+  139  # 
+  140  # what we haven't done
+  141  # is given ourselves a seperate process directory to launch processes in
+  142  # if you list /proc you will see a list of all running processes
+  143  # ps fax gives a nice grahical list...
+  144  #
+  145  # this is where chroot comes in
+  146  # 
+  147  # you set the root to a directory that has an os
+  148  # and it tops out there
+  149  #
+  150  # a short digresion - in the procs directory eaech process has a directory and you can see what is happening there
+  151  # this is the same as ps...
+  152  #
+  155  ls -l /proc
+  156  ls -l /proc/1
+  157  tree /proc
+  158  tree /proc | less
+  159  # Buenus!
+  161  # so we have the timer namespace, we have chrooted our directory
+  162  # time to setup the next namespace
+  163  # ha ha!
+  164  # we need to be able to mount a drive so the new namespace is, of course called , new namespace newns.  Apparently mount was the first namespace created so, you know
+  165  # so we can add other namespace elements 
+  166  # networking etc
+  167  #
+  168  # that leaves the ability to control the amount of resources a control group is allowed to consume
+  169  # we do that with resource groups
+  170  # they are called controlgroups
+  171  # cgroups
+  172  # in the filesystem they can be found in /sys/fs/cgroup
+  173  # for docker folders are created in the hierarchy
+  174  # dup files are setup then for every runninginstance na id is given and dups are created again.  constraints are assigned within the folders
+  
+
+  216  git clone http://github.com/lizrice/containers-from-scratch
+  218  cd containers-from-scratch/
+  220  less README.md 
+  221  less main.go
+  222  vim main.go
+  225  locate docker
+  
+
+so we start the container that houses the getting started tutorial
+
+227  docker run -d -p 80:80 docker/getting-started
+  228  sudo docker run -d -p 80:80 docker/getting-started
+  232  sudo docker container list
+  243  mv containers-from-scratch cfs
+  248  git clone https://github.com/docker/getting-started/tree/master/app
+  250  git clone https://github.com/docker/getting-started/tree/master/app
+  252  git credential-manager uninstall
+  253  git clone http://github.com/docker/getting-started/tree/master/app
+  254  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  255  sudo dpkg -i google-chrome-stable_current_amd64.deb 
+  257  sudo apt --fix-installation
+  259  sudo apt install fonts-liberation
+  261  sudo apt --fix-broken install
+  265  rm google-chrome-stable_current_amd64.deb 
+  268  cd Downloads/
+  270  git status
+  285  # note to self, it is easier to do mod e
+  286  ls
+  288  cd Downloads/
+  
+
+
+download VS Code and setup git in the app project
+load the project into Code via the git tree.
+Way cool!
+
+296  sudo apt-get install unzip
+  297  unzip app.zip 
+  315  sudo dpkg -i code_1.60.1-1631294805_amd64.deb 
+  316  whereis python
+  317  ext install ms-python.python
+  324  git status
+  325  git add .
+  328  git commit -a -m "Load App"
+  
+
+
+334  From node:12-alpine
+  335  FROM node:12-alpine
+  336  vim Dockerfile
+  337  cat >>Dockerfile
+  
+Let's look at processes!
+
+345  pid
+  346  ps fax
+  347  ps
+  348  ps fax
+  349  clear
+  367  cat Dockerfile 
+  370  sudo docker build -t getting-started .
+  372  git status
+  373  git add Dockerfile 
+  374  git commit -a -m "Added Dockerfile"
+
+This next bit can be a bit confusing if you don't remember
+there is a getting started tutorial service and a getting started sample app
+the tutorial is on 80:80 and the app you are using for the tutorial is on 3000:3000
+  
+
+375  docker container list
+  376  sudo docker container list
+  378  sudo docker run -dp 3000:3000 getting-started
+  379  sudo docker container list
+  380  # the -d puts the container in detached mode - ie it is not tied to the teminal
+  381  the 3000:3000 gives us a port with which to comunicate with the application
+  383  sudo docker run -d -p 80:80 docker/getting-started
+  384  sudo docker container list
+  387  sudo docker build -t getting-started .
+  390  sudo docker run -dp 3000:3000 getting-started
+
+
+here we start using the short names to refer to the GUIDs attached to container names
+
+  392  sudo docker ps
+  399  sudo docker stop 4569
+  401  sudo docker ps
+  402  sudo docker rm 4569
+  403  sudo docker run -dp 3000:3000 getting-started
+  406  sudo docker push many21ai/getting-started
+  408  sudo docker login -u many21ai
+
+  409  # so now we have the connection to docker hub setup.  It looks like it strores this so is ist a onetime thing?
+still unknown
+
+
+  411  sudo docker tag getting-started many21ai/getting-started
+  412  sudo docker push many21ai/getting-started
+  416  chmod 755 commands.sh 
+  417  ./commands.sh
+  418  sudo docker containter --help
+  419  sudo docker containter list
+  420  sudo docker container list
+  
+
+I did some comtainer cleanup
+and now we execute some commands within a containter
+this is to prove two of the same container images create their own workspace
+
+
+421  sudo docker exec -t -i 6c49 /bin/bash
+  423  sudo docker run -it ubuntu ls /
+  424  clear
+  427  sudo docker container list
+  428  sudo docker stop 6c49
+  429  sudo docker container list
+  430  sudo docker rm 6c49
+  431  sudo docker container list
+  432  #
+  433  # so now we are going to create a named volume to persist our data
+  434  # this is easy as we are going to create a mount poiont to be remounted
+  435  #
+  437  sudo docker volume create todo-db
+  438  # so docker is managing a bunch of things under the covers here...
+  439  # it has put this volume somewhere on the file system
+  
+/var/docker/ has several directories includeing volumes.  It is named here.
+
+
+  441  cd /
+  442  find todo-db
+  443  cd ~
+  444  cd app
+  445  cd src
+  446  pushd /
+  447  popd
+  448  sudo docker container list
+  449  # we are going to shutdown the app to make config changes
+  450  sudo docker container -f rm 3444
+  451  sudo docker rm -f 3444
+  452  # that did it, no need to stop with the use of -f
+  453  # now to restart using our named mount point
+  454  docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+  
+3000:3000 is a named value pair?  It is a definition of what is inside and outside the container/???
+
+455  sudo docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+  456  sudo docker ps
+  458  sudo docker rm -f 3ad5
+  459  sudo docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+  460  sudo docker rm -f 31cb
+  461  sudo docker run -dp 3000:3000 -v todo-db:/etc/todos getting-started
+  462  #
+  463  # so there are two main two main storage options with docker
+  464  # named volumes and bind mounts
+  465  # there are lots of thrid party options
+  466  # this takes us to conversationss about swarms and kubernetics
+  467  #
+  468  # 
+  469  # lets see where our volume is!
+  470  docer volume inspect todo-db
+  471  sudo docker volume inspect todo-db
+  472  # /var/lib/docker/volumes/todo-db/_data
+  473  # this follows the linux filesystem standard
+  
+Lets take a look...
+
+  482  sudo find . -name todo-db
+  483  clear
+  484  # beware find syntax 
+  485  sudo find . -name todo-db
+
+the . above means current path - you can speisify another path here.  
+
+486  pushd /var/lib/docker
+  491  # so /var/lib/docker holds all the data for docker containters etc
+  492  sudo cat 09*
+  
+
+496  # Let's talk bind points
+  497  # 
+  498  # bind points give you active access into the file system
+  499  #
+  500  # bind mounts
+  501  #
+  502  sudo docker ps
+  503  sudo docker rm -f 09f18
+  504  sudo docker ps
+
+
+this never worked as advertised - i looked up how to do bind mounts and figured it out.
+There is a lot of realative pathing to pay attention to.
+
+  507  sudo docker run -dp 3000:3000 -w /app -v "$(pwd):/app" node:12-alpine sh -c "yarn install && yarn run dev"
+  508  sudo docker logs -f 35f4
+  509  sudo docker rm -f 35f4
+
+so there was a bunch of try, review logs, try again.
+
+I eventaully got tired of the comand line...
+
+  522  echo docker run -dp 3000:3000 -w /app -v "$(pwd)/app" node:12-alpine sh -c "yarn install && yarn run dev" > cmd.sh
+  523  chmod 755 cmd.sh
+  524  ./cmd.sh
+  525  vim cmd.sh 
+  550  sudo docker ps
+  
+figuring out the differences between active and inactive containters, docker container list -a gets everyting user installed
+the ps gets what is running
+many times when the container failed some step in it's launch proces it would just shut itself off.  Not sure if this is a bug or feature ;-)
+
+
+551  sudo ls /var/lib/docker/container
+  552  sudo ls /var/lib/docker/
+  553  sudo ls /var/lib/docker/containers
+  554  vim cmd.sh 
+  555  clear
+  556  sudo ./cmd.sh
+  557  sudo docker ps
+  558  sudo docker container list
+  559  sudo docker log d932
+  560  sudo docker logs -f  d932
+  561  sudo docker logs -f  d932b
+  562  sudo docker logs -f  ac09
+  563  ls
+  564  clear
+  565  sudo ./cmd.sh
+  566  docker logs -f 0213
+  567  sudo docker logs -f 0213
+  568  vim  cmd.sh 
+  569  sudo ./cmd.sh
+  570  sudo docker logs -f 956c
+  571  ls -l
+  572  time
+  573  echo date
+  574  date
+
+  575  # an alternative to bind mounts is named volumes
+I never came back to this but I should...
+If there is a distinction here it is not jumping out at me.
+bind mounts attach to the current file system and are good for syncing in dev changes
+volumnes are managed by docker and good for portablity
+
+
+  576  vim cmd.sh
+
+  591  # there it is!
+  592  sudo docker logs -f 99b6
+  593  sudo docker exec 99b6
+  594  sudo docker exec 99b6 /bin/bash
+  595  sudo docker ps
+  604  sudo ls /var/lib/docker/containers
+  605  sudo ls /var/lib/docker/containers > ~/containers.txt
+  609  chmod 755 containers.txt 
+  610  ./containers.txt 
+  
+use the directory listing to create remove commands for all the containers.
+
+  627  sudo docker logs -f 5fe4
+  628  sudo docker rm -f 5fe4
+  
+trying to troubleshoot the tutorial
+May want to look into yarn...
+
+yarn is a package manager mostly built for deploying node.js projects
+
+  671  # ans of attack
+  672  # try to fix the tutrial
+  673  #  find a subroup on reddit
+  674  #  find someone else
+  675  #  I've looked at the piece on sight - no joy
+  676  # go old school and keep studying the linux tech
+  677  # read the man docs 
+  678  # explore more of the docs on docker
+  679  # mix and match
+  680  #
+  681  sudo docker run --help
+  682  vim cmd.sh
+  683  sudo ./cmd.sh
+  684  docker ps
+  685  sudo docker ps
+  686  clear
+  687  sudo docker logs -f 6
+  688  # Ha Ha!  I can not be stopped!
+  689  # one little colon and two hours later...
+  690  # let's do the build of the newly changed container
+  691  sudo docker stop 6
+  692  sudo docker ps
+  693  sudo docker build -t getting-started ..
+
+
+It is strange thinking about the build...
+we build the package
+the package starts
+we check the logs
+after that we can run the package.  It has been build.
+We are using a docker file to express the build
+from there it can be run
+If it is using a bind mount we can operate on it on the system
+If it is using a volumne mount ... is there anything that really keeps us from operating on it other than good taste?
+
+
+  694  cd app
+  695  sudo docker build -t getting-started .
+  696  # that worked and included the full build with yarn.
+  697  # the yarn install used the production flag
+  698  # ??? will this run fully packaged?
+  699  vim cmd.sh
+  700  # containers only start one process unless you use a process manage
+  701  # 
+  702  #
+  703  # Running multi containers
+  704  #
+  705  # if two containers are on the same metwork they can talk, if they are not they can not
+  706  #
+  707  # docker lets us create networks
+
+i HATE when they use the same name for multiple things.. which @#$%#$% getting started?
+
+
+  708  docker network create todo-app-net
+  709  sudo docker network create todo-app-net
+  710  cd ..
+  711  sudo ./cmdsql.sh
+  712  chmod 755 cmdsql.sh
+  713  sudo ./cmdsql.sh
+  714  sudo ps
+  715  sudo docker ps
+
+*************88
+take a look at the network we created.
+
+  716  sudo docker network -f list
+  717  sudo docker network ls
+  
+ 7730* 
+  731  sudo docker container list -a
+  732  sudo docker rm -f 68
+  733  sudo docker container list -a
+  734  sudo docker rm -f 65
+  735  sudo docker container list -a
+ 28  sudo docker container list -a
+  729  sudo docker rm -f 1b3
+ 736  sudo ./cmdsql.sh
+  737  # Ha! no errors!
+  738  sudo docker container list -a
+  739  # it took ports 33.6/tcp
+  742  sudo docker network inspect --help
+  743  sudo docker network inspect -f
+  746  sudo docker ps
+  748  sudo docker exec -it 70 mysql -p
+  
+
+So here we can bring in network utilities
+These must all run on very skinny versions of the linux os.
+
+749  sudo docker run -it --network todo-app-net nicolaka/netshoot
+  750  # so netshoot is a network utilitiy that we set to use the docker network tod-app-net
+  751  sudo docker container list -a
+  752  sudo ./cmd.sh
+  753  clear
+  754  sudo docker container list -a
+  755  sudo docker logs 5a
+  756  less cmd.sh
+  757  cp app/cmd.sh cmd.sh
+  758  less cmd.sh
+  759  sudo docker rm -f 5a
+  760  sudo ./cmd.sh
+  761  cp app/cmd.sh cmd.sh
+  762  sudo ./cmd.sh
+  763  sudo docker rm -f d5
+  764  sudo ./cmd.sh
+  765  sudo docker logs 10
+  766  sudo docker rm -f 10
+  767  cp app/cmd.sh cmd.sh
+  768  sudo ./cmd.sh
+  769  sudo docker logs 2b
+  770  less cmd.sh 
+  771  cp app/cmd.sh cmd.sh
+  772  sudo docker rm -f 2b
+  773  clear
+  774  sudo ./cmd.sh
+  775  sudo docker logs 68
+  776  cd app/
+  777  ls
+  778  git status
+  779  git restore cmd.sh
+  780  less cmd.sh
+  781  cd ..
+  782  less cmd.sh
+  783  cd cmd.sh app/cmd.sh
+  784  cp cmd.sh app/cmd.sh
+  785  cp app/cmd.sh cmd.sh
+  786  less cmd.sh 
+  787  sudo docker container list -a
+  788  sudo docker rm 68
+  789  sudo ./cmd.sh
+  790  sudo docker logs e88
+  791  # whoo-hoo - it took a few edits but werare there
+  792  # further reading: yarn
+  793  # further reading: netshoot
+  794  # further readding: mysql 
+  795  # important tip _FILE to hold config info
+  796  #   How to secure
+  797  #   This is all good
+  798  #
+  799  # I am offically excited about docker!
+  800  #
+  801  # checkinng in on the container logic
+  802  sudo docker container ps
+  803  sudo docker container list -a
+  804  sudo docker run --network todo-app-net 66
+  805  docker run --help
+  806  clear
+  807  sudo docker container list -a
+  808  sudo docker exec -it 70 mysql -p todos
+  809  clear
+  810  ls
+  811  cd app
+  812  touch docker-compose.yml
+  813  cat >> docker-compose.yml 
+  814  cat docker-compose.yml ~/cmd.sh ~/cmdsql.sh
+  815  cat docker-compose.yml ~/cmd.sh ~/cmdsql.sh > docker-compose.yml 
+  816  less docker-compose.yml 
+  817  # interestingly the redirect blanked the file first.
+  818  # lets see what happens if we use append
+  819  touch docker-compose.yml 
+  820  less docker-compose.yml 
+  821  # we want to do a tmux tutorial
+  822  # we want to learn to copy paste in this shell or get a schell that can.
+  823  # we want a db engine that rocks!
+  824  #
+  825  echo "" | cat >docker-compose.yml 
+  826  less docker-compose.yml 
+  827  # yo soy el Wizard!
+  828  cat >>docker-compose.yml 
+  829* cat cmd.sh cmdsql.sh >>docker-compose.yml 
+  830  less docker-compose.yml 
+  831  cat >> dc.tmp
+  832  cat dc.tmp > docker-compose.yml 
+  833  less doc
+  834  less docker-compose.yml 
+  835  cat ~/cmd.sh ~/cmdsql.sh >> docker-compose.yml 
+  836  less docker-compose.yml 
+  837  vim docker-compose.yml 
+  838  sudo docker containter list -a
+  839  sudo docker container list -a
+  840  sudo docker container list -a | cut
+  841  sudo docker container list -a | cut -f 1
+  842  sudo docker container list -a | cut -k 1
+  843  cut --help
+  844  sudo docker container list -a | cut -f 1
+  845  sudo docker container list -a | cut -f 1 -d " "
+  846  sudo docker container list -a | cut -f 1 -d " " > rmct.sh
+  847  chmeod 755 rmct.sh
+  848  chmod 755 rmct.sh
+  849  vim rmct.sh 
+  850  sudo ./rmct.sh
+  851  sudo docker container list -a
+  852  docker compose up -d
+  853  sudo docker-compose up -d
+  854  docker-compose up -d
+  855  sudo apt install docker-compose
+  856  sudo docker-compose up -d
+  857  vim docker-compose.yml 
+  858  sudo docker-compose up -d
+  859  docker-compose logs -f
+  860  sudo docker-compose logs -f
+  861  # big takeaway.  Nothing beats time with the docs
+  862  # 
+  863  # thats right
+  864  # nothing
+  865  #
+  866  docker-compose down
+  867  sudo docker-compose down
+  868  vim docker-compose.yml 
+  869  sudo docker-compose up -d
+  870  sudo docker-compose logs -f
+  871  sudo docker-compose down
+  872  sudo docker-compose up -d
+  873  sudo docker-compose logs -f
+  874  # ok - one typo fixed and we are up and running.
+  875  # it doesn't look like we persisted the db...
+  876  sudo docker-compose down
+  877  sudo docker-compose up -d
+  878  # and now it was persisted.  I think it is connecting to the sql light db...
+  879  sudo docker-compose down
+  880  #
+  881  # it is best practice to scan images for vulnarablitites
+  882  docker scan getting-started
+  883  sudo docker scan getting-started
+  884  # so that passed
+  885  # it is possible to use docker hub app to autoscan
+  886  #
+  887  # you can see what events made up making an image
+  888  sudo docker image history getting-started
+  889  #
+  890  # this works
+  891  #
+  892  sudo docker image history --no-trunc  getting-started
+  893  sudo docker image history --no-trunc  getting-started |less
+  894  clear
+  895  #
+  896  # so those are the layers that make up an image.
+  897  #
+  898  # we can download one, make channges and save locallaly or upload
+  899  #
+  900  # think about copying in filesunlikely to change earlier in the build proces so that as many components as possible are brought back from cache
+  901  #
+  902  # What's next?
+  903  # container orcestration
+  904  # having the containers talk.
+  905  #
+  906  # kubernetics, swarm, nomand ECS address these issues
+  907  #
+  908  # CNCFP - Cloud Native Computing Foundation Projects.
+  909  #
+  910  # for secrets
+  911  #
+  912  cd ..
+  913  ls
+  914  cd cfs
+  915  ls
+  916  cd ..
+  917  history > docker
+  918  ls
+  919  mkdir notes
+  920  cp docker notes/
+  921  cd notes
+  922  ls
+  923  git status
+  924  cd ..
+  925  git add .
+  926  git -a -m "commit changes"
+  927  git commit  -a -m "commit changes"
+  928  clear
+  929  git status
+  930  ls
+  931  git clone remote github.com/jwhytis01/techNotes
+  932  git clone github.com/jwhytis01/techNotes
+  933  git clone github.com/jWhytis01/techNotes
+  934  git clone http://github.com/jWhytis01/techNotes
+  935  ls
+  936  cd techNotes
+  937  cd notes/
+  938  ls
+  939  history > docker.txt
